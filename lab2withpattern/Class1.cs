@@ -29,13 +29,15 @@ namespace lab2withpattern
     public class MenuItem : MenuComponent
     {
         string name;
-        public MenuItem(string name)
+        int price;
+        public MenuItem(string name, int price)
         {
             this.name = name;
+            this.price = price;
         }
         public override string getName() { return name; }
         public override void print() { 
-            textBoxAccess.textReturn += "\n    ---" + getName() + "\n";
+            textBoxAccess.textReturn += "\n    ---" + getName() + "     " + price + " рублей\n";
 
         }
     }
@@ -84,6 +86,10 @@ namespace lab2withpattern
             return textBoxAccess.textReturn;
         }
 
+        public void clearMenus()
+        {
+            allMenus.remove(allMenus);
+        }
         // public void printMenu() { allMenus.print(); }
         
 
