@@ -1,0 +1,86 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace lab2withpattern
+{
+    internal class Class1
+    {
+    }
+    public abstract class MenuComponent
+    {
+        public string textReturn = "empty";
+        // базовое поведение в случае, если подкласс не будет
+        // реализовывать метод по-своему.
+        // например, у листьев (leafes) нет add, remove и getChild
+        public void add() { /*throw new NotImplementedException();*/ }
+        public void remove() { /*throw new NotImplementedException();*/ }
+        public MenuComponent getChild(int i) { /*throw new NotImplementedException();*/return null; }
+        public string getName() { return null; /*throw new NotImplementedException();*/ }
+        public void print() { /*throw new NotImplementedException();*/ }
+    }
+
+    public class MenuItem : MenuComponent
+    {
+        string name;
+        public MenuItem(string name)
+        {
+            this.name = name;
+        }
+        public string getName() { return name; }
+        public void print() { textReturn += " " + getName(); }
+    }
+
+    public class Menu : MenuComponent
+    {
+        ArrayList menuComponents = new ArrayList();
+        string name;
+        public Menu(string name)
+        {
+            this.name = name;
+        }
+        public void add(MenuComponent menuComponent) { menuComponents.Add(this); }
+        public void remove() { menuComponents.Remove(this); }
+        public MenuComponent getChild(int i)
+        {
+            return (MenuComponent)menuComponents[i];
+        }
+        public string getName() { return name; }
+        public void print()
+        {
+            textReturn += "\n" + getName();
+            textReturn += "\n" + "----------------"; 
+            foreach (MenuComponent component in menuComponents)
+            {
+                component.print();
+            }
+        }
+    }
+    
+    public class Waitress
+    {
+        MenuComponent allMenus;
+        public Waitress(MenuComponent allMenus)
+        {
+            this.allMenus = allMenus;
+        }
+
+        public string printMenu()
+        {
+            return printMenu(allMenus);
+        }
+
+        // public void printMenu() { allMenus.print(); }
+        public string printMenu(MenuComponent allMenus)
+        {
+            allMenus.print();
+            
+            return allMenus.textReturn; 
+        }
+
+    }
+}
