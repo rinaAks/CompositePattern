@@ -8,9 +8,10 @@ public partial class Form1 : Form
     }
 
 
-    MenuComponent initialMenus = new Menu("Изначальные меню");
+    MenuComponent initialMenus = new Menu("Изначальное меню");
     bool initialMenusFlag = true;
-    MenuComponent newMenus = new Menu("Новые меню");
+    MenuComponent newMenus = new Menu("Новое меню");
+    int valueNewMenus = 0;
 
     private void showExistingMenus() //здесь не только show делается, но и create
     {
@@ -57,6 +58,8 @@ public partial class Form1 : Form
 
         ComboboxItem item = new ComboboxItem();
         item.Text = newMenu.getName();
+        item.Value = valueNewMenus;
+        valueNewMenus += 1;
         cbMenus.Items.Add(item);
     }
 
@@ -83,9 +86,17 @@ public partial class Form1 : Form
 
     private void btAddItem_Click(object sender, EventArgs e)
     {
+        //tbAddItem.Clear();
+
         MenuComponent menuItem = new MenuItem(tbAddItem.Text, (int)numPrice.Value);
+        /*for (int i = 0; i < valueNewMenus - 2; i++)
+        {
+            if((string)cbMenus.SelectedItem == newMenus.getChild(i).getName())
+            {
+                newMenus.getChild(i).add(menuItem);
+            }
+        }*/
         newMenus.add(menuItem);
-        //tbAddMenu.Clear();
         lbAddItem.Text = "Блюдо " + menuItem.getName() + "\nдобавлено";
 
     }
