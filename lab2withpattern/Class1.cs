@@ -82,6 +82,7 @@ namespace lab2withpattern
 
         public string printMenu()
         {
+            textBoxAccess.textReturn = " ";
             allMenus.print();
             return textBoxAccess.textReturn;
         }

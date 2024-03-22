@@ -13,10 +13,8 @@ public partial class Form1 : Form
     MenuComponent newMenus = new Menu("Новое меню");
     int valueNewMenus = 0;
 
-    private void showExistingMenus() //здесь не только show делается, но и create
+    private void createExistingMenus()
     {
-        Waitress waitress = new Waitress(initialMenus);
-
         MenuComponent pancakeMenu = new Menu("Pancake House Menu");
         MenuComponent pancakeDesertMenu = new Menu("Pancake House DESERT Menu");
         MenuComponent sandwichMenu = new Menu("Sandwich House Menu");
@@ -36,17 +34,22 @@ public partial class Form1 : Form
 
         sandwichMenu.add(new MenuItem("Сэндвич с курицей", 50));
         sandwichMenu.add(new MenuItem("Сэндвич с ветчиной", 40));
-
+    }
+    private void printExistingMenus(Waitress waitress) //здесь не только show делается, но и create
+    {
         tbOutput.Text = waitress.printMenu();
     }
 
     private void btStart_Click(object sender, EventArgs e)
     {
-        if (initialMenusFlag) showExistingMenus();
+        tbOutput.Clear();
+        Waitress waitress = new Waitress(initialMenus);
+        if (initialMenusFlag) createExistingMenus();
         initialMenusFlag = false;
+        tbOutput.Text += waitress.printMenu();
 
         Waitress waitressNewMenus = new Waitress(newMenus);
-        tbOutput.Text = waitressNewMenus.printMenu();
+        tbOutput.Text += waitressNewMenus.printMenu();
     }
 
     private void btAddMenu_Click(object sender, EventArgs e)
@@ -89,14 +92,14 @@ public partial class Form1 : Form
         //tbAddItem.Clear();
 
         MenuComponent menuItem = new MenuItem(tbAddItem.Text, (int)numPrice.Value);
-        /*for (int i = 0; i < valueNewMenus - 2; i++)
+        for (int i = 0; i < valueNewMenus; i++)
         {
-            if((string)cbMenus.SelectedItem == newMenus.getChild(i).getName())
+            if(cbMenus.SelectedItem.ToString() == newMenus.getChild(i).getName())
             {
                 newMenus.getChild(i).add(menuItem);
             }
-        }*/
-        newMenus.add(menuItem);
+        }
+        //newMenus.add(menuItem);
         lbAddItem.Text = "Блюдо " + menuItem.getName() + "\nдобавлено";
 
     }
